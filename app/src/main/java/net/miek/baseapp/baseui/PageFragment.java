@@ -1,6 +1,7 @@
-package net.miek.baseapp;
+package net.miek.baseapp.baseui;
 
 import android.os.Handler;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,7 +9,13 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.ListView;
+
+import net.miek.baseapp.R;
+import net.miek.baseapp.dragndrop.StableArrayAdapter;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by Mike Wang on 2015/11/12.
@@ -16,25 +23,28 @@ import android.widget.TextView;
 public class PageFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     private SwipeRefreshLayout swipeLayout;
-    private TextView mTV;
-    private String info;
+    private String[] mData = new String[]{"This is Mike", "Random word", "Sample Text", "Another Sample words",
+            "This is Mike", "Random word", "Sample Text", "Another Sample words",
+            "This is Mike", "Random word", "Sample Text", "Another Sample words",
+            "This is Mike", "Random word", "Sample Text", "Another Sample words",
+            "This is Mike", "Random word", "Sample Text", "Another Sample words",
+            "This is Mike", "Random word", "Sample Text", "Another Sample words"};
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.pager_fragment, container, false);
 
-        mTV = (TextView) root.findViewById(R.id.pager_info);
+        // Setup list view
+        List<String> mCheeseList = Arrays.asList(mData);
+        StableArrayAdapter adapter = new StableArrayAdapter(getActivity(), mCheeseList);
+        ListView listView = (ListView) root.findViewById(R.id.listview);
 
-        int color = Utils.getColor();
-        root.setBackgroundColor(color);
-        mTV.setTextColor((0xFFFFFFFF - color) + 0xFF000000);
-
-        info = getArguments().getString("page_info");
-
-        if (mTV != null)
-            mTV.setText("This is " + info);
+        listView.setAdapter(adapter);
+        listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 
 
+        // Setup pull to refresh
         swipeLayout = (SwipeRefreshLayout) root.findViewById(R.id.swipe_container);
         swipeLayout.setOnRefreshListener(this);
         swipeLayout.setColorSchemeResources(
@@ -51,10 +61,9 @@ public class PageFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                mTV.setText("This is " + info);
                 swipeLayout.setRefreshing(false);
             }
-        }, 5000);
-        mTV.setText("onRefresh !!!!!");
+        }, 4000);
+        Snackbar.make(getActivity().getCurrentFocus(), "onRefresh la~~", Snackbar.LENGTH_LONG).setAction("Action", null).show();
     }
 }

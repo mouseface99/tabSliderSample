@@ -1,4 +1,4 @@
-package net.miek.baseapp;
+package net.miek.baseapp.slidingtab;
 
 /*
  * Copyright (C) 2013 The Android Open Source Project

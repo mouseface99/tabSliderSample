@@ -1,4 +1,4 @@
-package net.miek.baseapp;
+package net.miek.baseapp.animations;
 
 import android.support.v4.view.ViewPager;
 import android.view.View;

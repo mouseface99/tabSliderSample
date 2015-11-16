@@ -1,4 +1,4 @@
-package net.miek.baseapp;
+package net.miek.baseapp.baseui;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
