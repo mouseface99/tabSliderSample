@@ -15,7 +15,11 @@ package net.miek.baseapp.dragndrop;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 import android.content.Context;
+import android.graphics.Color;
+import android.support.v7.widget.CardView;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,7 +35,7 @@ import java.util.HashMap;
 import java.util.List;
 
 
-public class StableArrayAdapter extends BaseAdapter {
+public class StableArrayAdapter extends RecyclerView.Adapter<StableArrayAdapter.ViewHolder> {
 
     private Context mContext;
     private List<String> mData;
@@ -42,34 +46,34 @@ public class StableArrayAdapter extends BaseAdapter {
     }
 
     @Override
-    public int getCount() {
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(mContext).inflate(R.layout.text_view, parent, false);
+        return new ViewHolder(v);
+    }
+
+    @Override
+    public void onBindViewHolder(ViewHolder holder, int position) {
+        holder.mTextView.setText(mData.get(position));
+    }
+
+    @Override
+    public int getItemCount() {
         return mData.size();
     }
 
-    @Override
-    public Object getItem(int position) {
-        return mData.get(position);
-    }
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        public TextView mTextView;
+        public CardView mCard;
 
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }
-
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        if(convertView == null)
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.text_view, null);
-
-
-        Log.d("MIKE", "Get view ["+position+"]");
-        TextView tv = (TextView)convertView;
-
-        int color = Utils.getColor();
-        tv.setBackgroundColor(color);
-        tv.setTextColor((0xFFFFFFFF - color) + 0xFF000000);
-        tv.setText(mData.get(position));
-
-        return tv;
+        public ViewHolder(View v) {
+            super(v);
+            mCard = (CardView) v;
+            mTextView = (TextView) v.findViewById(R.id.pager_info);
+            int color = Utils.getColor();
+            mTextView.setBackgroundColor(color);
+            mTextView.setTextColor((0xFFFFFFFF - color) + 0xFF000000);
+//            mTextView.setTextColor(Color.GRAY);
+//            mTextView.setBackgroundColor(Color.WHITE);
+        }
     }
 }

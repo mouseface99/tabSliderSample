@@ -6,10 +6,12 @@ import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 
 import net.miek.baseapp.R;
 import net.miek.baseapp.dragndrop.StableArrayAdapter;
@@ -38,10 +40,11 @@ public class PageFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         // Setup list view
         List<String> mCheeseList = Arrays.asList(mData);
         StableArrayAdapter adapter = new StableArrayAdapter(getActivity(), mCheeseList);
-        ListView listView = (ListView) root.findViewById(R.id.listview);
-
-        listView.setAdapter(adapter);
-        listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+        RecyclerView mRecyclerView = (RecyclerView) root.findViewById(R.id.listview);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setAdapter(adapter);
 
 
         // Setup pull to refresh
