@@ -11,11 +11,13 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import net.miek.baseapp.R;
+import net.miek.baseapp.dragndrop.SimpleItemTouchHelperCallback;
 import net.miek.baseapp.dragndrop.StableArrayAdapter;
 
 import java.util.Arrays;
@@ -50,7 +52,14 @@ public class PageFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 //        mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(5, StaggeredGridLayoutManager.HORIZONTAL));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.setHasFixedSize(true);
+
+
+        ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(adapter);
+        ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
+        touchHelper.attachToRecyclerView(mRecyclerView);
+
         mRecyclerView.setAdapter(adapter);
+
 
 
         // Setup pull to refresh

@@ -20,6 +20,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,11 +32,12 @@ import android.widget.TextView;
 import net.miek.baseapp.R;
 import net.miek.baseapp.Utils;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
 
-public class StableArrayAdapter extends RecyclerView.Adapter<StableArrayAdapter.ViewHolder> {
+public class StableArrayAdapter extends RecyclerView.Adapter<StableArrayAdapter.ViewHolder> implements ItemTouchHelperAdapter {
 
     private Context mContext;
     private List<String> mData;
@@ -59,6 +61,26 @@ public class StableArrayAdapter extends RecyclerView.Adapter<StableArrayAdapter.
     @Override
     public int getItemCount() {
         return mData.size();
+    }
+
+    @Override
+    public void onItemMove(int fromPosition, int toPosition) {
+        if (fromPosition < toPosition) {
+            for (int i = fromPosition; i < toPosition; i++) {
+                Collections.swap(mData, i, i + 1);
+            }
+        } else {
+            for (int i = fromPosition; i > toPosition; i--) {
+                Collections.swap(mData, i, i - 1);
+            }
+        }
+        notifyItemMoved(fromPosition, toPosition);
+    }
+
+    @Override
+    public void onItemDismiss(int position) {
+        mData.remove(position);
+        notifyItemRemoved(position);
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
