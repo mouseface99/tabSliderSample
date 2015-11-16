@@ -1,14 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
-    <TextView
-        style="?android:textAppearanceLarge"
-        android:padding="16dp"
-        android:lineSpacingMultiplier="1.2"
+<android.support.v4.widget.SwipeRefreshLayout
+    android:id="@+id/swipe_container"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Test Text for Pager Fragment"
-        android:id="@+id/pager_info"/>
-</LinearLayout>
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/pager_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:text="Test Text for Pager Fragment"/>
+    </ScrollView>
+
+</android.support.v4.widget.SwipeRefreshLayout>
