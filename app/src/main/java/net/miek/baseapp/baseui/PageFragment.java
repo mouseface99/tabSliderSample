@@ -7,8 +7,10 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,12 +27,14 @@ import java.util.List;
 public class PageFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     private SwipeRefreshLayout swipeLayout;
-    private String[] mData = new String[]{"This is Mike", "Random word", "Sample Text", "Another Sample words",
-            "This is Mike", "Random word", "Sample Text", "Another Sample words",
-            "This is Mike", "Random word", "Sample Text", "Another Sample words",
-            "This is Mike", "Random word", "Sample Text", "Another Sample words",
-            "This is Mike", "Random word", "Sample Text", "Another Sample words",
-            "This is Mike", "Random word", "Sample Text", "Another Sample words"};
+    private String[] mData = new String[]{"This is Mike", "Random word", "Sample Text", "Another Sample words", "And it's on and on",
+            "This is Mike", "Random word", "Sample Text", "Another Sample words", "And it's on and on",
+            "This is Mike", "Random word", "Sample Text", "Another Sample words", "And it's on and on",
+            "This is Mike", "Random word", "Sample Text", "Another Sample words", "And it's on and on",
+            "This is Mike", "Random word", "Sample Text", "Another Sample words", "And it's on and on",
+            "This is Mike", "Random word", "Sample Text", "Another Sample words", "And it's on and on",
+            "This is Mike", "Random word", "Sample Text", "Another Sample words", "And it's on and on",
+            "This is Mike", "Random word", "Sample Text", "Another Sample words", "And it's on and on"};
 
     @Nullable
     @Override
@@ -42,6 +46,8 @@ public class PageFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         StableArrayAdapter adapter = new StableArrayAdapter(getActivity(), mCheeseList);
         RecyclerView mRecyclerView = (RecyclerView) root.findViewById(R.id.listview);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+//        mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
+//        mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(5, StaggeredGridLayoutManager.HORIZONTAL));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setAdapter(adapter);
